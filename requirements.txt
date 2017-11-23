@@ -5,3 +5,5 @@ numpy
 fastdtw
 pandas
 gunicorn
+scipy
+
