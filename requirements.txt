@@ -6,4 +6,5 @@ fastdtw
 pandas
 gunicorn
 scipy
+csv
 

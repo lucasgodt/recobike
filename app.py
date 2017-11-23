@@ -57,7 +57,7 @@ def static_page():
     return render_template('index.html')
 
 
-class UserTracks(Resource):
+class User_Tracks(Resource):
     #retorna os trajetos realizados por um usuario
     def get(self, user_id):
         ident = [int(user_id)]
@@ -82,8 +82,10 @@ class Track_Recommendation(Resource):
         trajetoria = tracks[tracks['track_id']==previsoes['id'].values[0]]
         traj = trajetoria[['latitude','longitude']].values.tolist()
         return jsonify(traj)
+    
+
         
-api.add_resource(UserTracks, '/usertracks/<user_id>') # Rota_1
+api.add_resource(User_Tracks, '/usertracks/<user_id>') # Rota_1
 api.add_resource(Track_Recommendation, '/recommend/<user_id>') # Rota_2
 
 if __name__ == '__main__':
