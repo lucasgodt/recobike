@@ -1,0 +1,7 @@
+flask
+flask-jsonpify
+flask-restful
+numpy
+fastdtw
+pandas
+gunicorn
