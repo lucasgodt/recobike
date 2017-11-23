@@ -83,7 +83,6 @@ class Track_Recommendation(Resource):
         traj = trajetoria[['latitude','longitude']].values.tolist()
         return jsonify(traj)
         
-api.add_resource(principal, '/') # Rota_0
 api.add_resource(UserTracks, '/usertracks/<user_id>') # Rota_1
 api.add_resource(Track_Recommendation, '/recommend/<user_id>') # Rota_2
 
