@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 from flask_restful import Resource, Api
 from json import dumps
 from flask.ext.jsonpify import jsonify
@@ -51,6 +51,10 @@ def recommend_tracks(predictions_df, userID, tracks, original_ratings_df, num_re
     return user_data, recommendations
 
 #inicio da api
+class principal(Resource):
+    #Pagina principal da api
+    def get(self):
+        return render_template('hello.html')
 
 class UserTracks(Resource):
     #retorna os trajetos realizados por um usuario
@@ -77,8 +81,8 @@ class Track_Recommendation(Resource):
         trajetoria = tracks[tracks['track_id']==previsoes['id'].values[0]]
         traj = trajetoria[['latitude','longitude']].values.tolist()
         return jsonify(traj)
-    
-
+        
+api.add_resource(principal, '/') # Rota_0
 api.add_resource(UserTracks, '/usertracks/<user_id>') # Rota_1
 api.add_resource(Track_Recommendation, '/recommend/<user_id>') # Rota_2
 
