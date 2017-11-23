@@ -54,7 +54,7 @@ def recommend_tracks(predictions_df, userID, tracks, original_ratings_df, num_re
 class principal(Resource):
     #Pagina principal da api
     def get(self):
-        return render_template('hello.html')
+        return render_template('index.html')
 
 class UserTracks(Resource):
     #retorna os trajetos realizados por um usuario
