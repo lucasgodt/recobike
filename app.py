@@ -4,9 +4,15 @@ from json import dumps
 from flask_jsonpify import jsonify
 import pandas as pd
 import numpy as np
+from addcsv import addLine
 
 app = Flask(__name__)
 api = Api(app)
+
+#Para implementar os posts
+#fields_tracks = ['id','latitude','longitude','track_id','time']
+#fields_users = ['id','id_android','speed','time','distance','rating','rating_bus','rating_weather','car_or_bus','linha']
+#addLine(args_1,'teste.csv')
 
 #carrega os csvs do dataset
 csv = pd.read_csv('go_track_tracks.csv')
