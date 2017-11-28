@@ -20,7 +20,7 @@ training_data, validation_data = gl.recommender.util.random_split_by_user(usuari
 trajetoria_usuario1 = trajetorias[trajetorias['track_id']==1]
 trajetoria_usuario1_2 = trajetorias[trajetorias['track_id']==2]
 trajetoria_usuario1_3 = trajetorias[trajetorias['track_id']==8]
-trajetoria_usuario2 = trajetorias[trajetorias['track_id']==146]
+trajetoria_usuario2 = trajetorias[trajetorias['track_id']==37989]
 
 #trajetoria_recomendada = training_data[training_data['id'] == recomendacoes['id']]
 
@@ -64,7 +64,7 @@ gmap = gmplot.GoogleMapPlotter(-10.9395848167205, -37.0597757046112, 16)
 gmap.plot(trajetoria_usuario1['latitude'],trajetoria_usuario1['longitude'], 'cornflowerblue', edge_width=5)
 gmap.plot(trajetoria_usuario1_2['latitude'],trajetoria_usuario1['longitude'], 'cornflowerblue', edge_width=5)
 gmap.plot(trajetoria_usuario1_3['latitude'],trajetoria_usuario1['longitude'], 'cornflowerblue', edge_width=5)
-gmap.plot(trajetoria_usuario2['latitude'],trajetoria_usuario2['longitude'], 'green', edge_width=5)
+gmap.plot(trajetoria_usuario2['latitude'],trajetoria_usuario2['longitude'], 'red', edge_width=5)
 #gmap.plot(trajetoria_recomendada['latitude'],trajetoria_recomendada['longitude'], 'red', edge_width=5)
 gmap.draw("meumap.html")
 

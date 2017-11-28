@@ -2,11 +2,14 @@ from flask import Flask, request, render_template
 from flask_restful import Resource, Api
 from json import dumps
 from flask_jsonpify import jsonify
+from flask_cors import CORS, cross_origin
 import pandas as pd
 import numpy as np
 from addcsv import addLine
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 api = Api(app)
 
 #Para implementar os posts
@@ -58,11 +61,13 @@ def recommend_tracks(predictions_df, userID, tracks, original_ratings_df, num_re
 
 #inicio da api
 @app.route('/')
+@cross_origin()
 def static_page():
     #Pagina principal da api
     return render_template('index.html')
 
-
+#@app.route('/usertracks/<user_id>')
+#@cross_origin()
 class User_Tracks(Resource):
     #retorna os trajetos realizados por um usuario
     def get(self, user_id):
@@ -80,14 +85,15 @@ class User_Tracks(Resource):
         #realiza post de novas trajetorias de usuarios
         return 1
 
+#@cross_origin()
 class Track_Recommendation(Resource):
     #Faz a previsão de uma trajetoria para um usuario
     def get(self, user_id):
-        ident = [int(user_id)]
-        already_rated, previsoes = recommend_tracks(preds_df, ident, tracks, ratings, 1)
-        trajetoria = tracks[tracks['track_id']==previsoes['id'].values[0]]
-        traj = trajetoria[['latitude','longitude']].values.tolist()
-        return jsonify(traj)
+            ident = [int(user_id)]
+            already_rated, previsoes = recommend_tracks(preds_df, ident, tracks, ratings, 1)
+            trajetoria = tracks[tracks['track_id']==previsoes['id'].values[0]]
+            traj = trajetoria[['latitude','longitude']].values.tolist()
+            return jsonify(traj)
     
 
         

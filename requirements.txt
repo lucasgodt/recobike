@@ -1,6 +1,7 @@
 flask
 flask-jsonpify
 flask-restful
+flask-cors
 numpy
 fastdtw
 pandas
