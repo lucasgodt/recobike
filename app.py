@@ -66,6 +66,15 @@ def static_page():
     #Pagina principal da api
     return render_template('index.html')
 
+@app.route('/novatrack', methods=['POST'])
+def my_test_endpoint():
+    input_json = request.get_json(force=True) 
+    # force=True, above, is necessary if another developer 
+    # forgot to set the MIME type to 'application/json'
+    print('data from client:', input_json)
+    dictToReturn = {'answer':42}
+    return jsonify(dictToReturn)
+
 #@app.route('/usertracks/<user_id>')
 #@cross_origin()
 class User_Tracks(Resource):
@@ -81,10 +90,6 @@ class User_Tracks(Resource):
         
         return jsonify(trajetorias)
     
-    def post(self, user_id):
-        #realiza post de novas trajetorias de usuarios
-        return 1
-
 #@cross_origin()
 class Track_Recommendation(Resource):
     #Faz a previsão de uma trajetoria para um usuario
