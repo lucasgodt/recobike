@@ -15,7 +15,6 @@ api = Api(app)
 #Para implementar os posts
 #fields_tracks = ['id','latitude','longitude','track_id','time']
 #fields_users = ['id','id_android','speed','time','distance','rating','rating_bus','rating_weather','car_or_bus','linha']
-#addLine(args_1,'teste.csv')
 
 #carrega os csvs do dataset
 csv = pd.read_csv('go_track_tracks.csv')
@@ -67,12 +66,25 @@ def static_page():
     return render_template('index.html')
 
 @app.route('/novatrack', methods=['POST'])
-def my_test_endpoint():
-    input_json = request.get_json(force=True) 
+def novatrack():
+    input_json = request.get_json(force=True); 
     # force=True, above, is necessary if another developer 
     # forgot to set the MIME type to 'application/json'
-    print('data from client:', input_json)
-    dictToReturn = {'answer':42}
+
+    # adiciona uma nova track aos dados
+    json_coordenadas = input_json["coordenadas"];
+    for coordenada in json_coordenadas:
+        #print(coordenada)
+        #fields_tracks = ['id','latitude','longitude','track_id','time']
+        argumentos_tracks = [input_json["trackId"],coordenada['latitude'],coordenada['longitude']]
+        addLine(argumentos_tracks,'testetracks.csv')
+        
+    # adiciona um novo percurso e avaliacao aos usuários
+    #fields_users = ['id','id_android','speed','time','distance','rating','rating_bus','rating_weather','car_or_bus','linha']
+    argumentos_users = [input_json["trackId"],input_json["userId"],0,0,0,input_json["trackRating"]];
+    addLine(argumentos_users,'testeusuarios.csv')
+                            
+    dictToReturn = {'resposta':'Deu certo'}
     return jsonify(dictToReturn)
 
 #@app.route('/usertracks/<user_id>')
