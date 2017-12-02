@@ -81,7 +81,7 @@ def novatrack():
         
     # adiciona um novo percurso e avaliacao aos usuários
     #fields_users = ['id','id_android','speed','time','distance','rating','rating_bus','rating_weather','car_or_bus','linha']
-    argumentos_users = [input_json["$trackId"],input_json["$userId"],0,0,0,input_json["trackRating"]];
+    argumentos_users = [input_json["$trackId"],input_json["userId"],0,0,0,input_json["trackRating"]];
     addLine(argumentos_users,'testeusuarios.csv')
                             
     dictToReturn = {'resposta':'Deu certo'}
