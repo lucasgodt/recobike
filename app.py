@@ -77,13 +77,13 @@ def novatrack():
         #print(coordenada)
         #fields_tracks = ['id','latitude','longitude','track_id','time']
         argumentos_tracks = [input_json["$trackId"],coordenada['latitude'],coordenada['longitude']]
-        addLine(argumentos_tracks,'go_track_trackpoints.csv')
+        addLine(argumentos_tracks,'/tmp/go_track_trackpoints.csv')
         
     # adiciona um novo percurso e avaliacao aos usuários
     print(input_json["userId"])
     #fields_users = ['id','id_android','speed','time','distance','rating','rating_bus','rating_weather','car_or_bus','linha']
     argumentos_users = [input_json["$trackId"],input_json["userId"],0,0,0,input_json["trackRating"]];
-    addLine(argumentos_users,'go_track_tracks.csv')
+    addLine(argumentos_users,'/tmp/go_track_tracks.csv')
                             
     dictToReturn = {'resposta':'Deu certo'}
     return jsonify(dictToReturn)
