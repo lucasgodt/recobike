@@ -26,7 +26,7 @@ class Tracks(db.Model):
     
 class TrackPoints(db.Model):
     __tablename__ = 'TrackPoints';
-    id_point = db.Column(db.Integer, primary_key=True, autoincrement = True))
+    id_point = db.Column(db.Integer, primary_key=True, autoincrement = True)
     id_track = db.Column(db.String(80), primary_key=False)
     latitude = db.Column(db.Integer, unique=False, nullable=False)
     longitude = db.Column(db.Integer, unique=False, nullable=False)
