@@ -17,15 +17,15 @@ db = SQLAlchemy(app)
 class Tracks(db.Model):
     id_android = db.Column(db.String(80), primary_key=False)
     id_track = db.Column(db.String(80), unique=True, nullable=False)
-    rating = db.Column(db.integer, unique=False, nullable=True)
+    rating = db.Column(db.Integer, unique=False, nullable=True)
 
     def __repr__(self):
         return '<User %r>' % self.username
     
 class TrackPoints(db.Model):
     id_track = db.Column(db.String(80), primary_key=False)
-    latitude = db.Column(db.integer, unique=False, nullable=False)
-    longitude = db.Column(db.integer, unique=False, nullable=False)
+    latitude = db.Column(db.Integer, unique=False, nullable=False)
+    longitude = db.Column(db.Integer, unique=False, nullable=False)
 
     def __repr__(self):
         return '<User %r>' % self.username
