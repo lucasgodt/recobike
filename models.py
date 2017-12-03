@@ -21,7 +21,7 @@ class Tracks(db.Model):
     rating = db.Column(db.Integer, unique=False, nullable=True)
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<User %r>' % self.id_android
     
 class TrackPoints(db.Model):
     id_point = db.Column(db.Integer, primary_key=True)
@@ -30,4 +30,4 @@ class TrackPoints(db.Model):
     longitude = db.Column(db.Integer, unique=False, nullable=False)
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<Track %r>' % self.id_track
