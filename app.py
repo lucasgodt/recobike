@@ -74,7 +74,7 @@ def novatrack():
     # adiciona uma nova track aos dados
     json_coordenadas = input_json["coordenadas"];
     for coordenada in json_coordenadas:
-        #print(coordenada)
+        print(coordenada)
         track = TrackPoints(id_track = input_json["$trackId"] ,latitude = coordenada['latitude'], longitude = coordenada['longitude'])
         db.session.add(track);
         db.session.commit();
