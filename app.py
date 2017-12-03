@@ -5,11 +5,15 @@ from flask_jsonpify import jsonify
 from flask_cors import CORS, cross_origin
 import pandas as pd
 import numpy as np
+from flask.ext.sqlalchemy import SQLAlchemy
 from addcsv import addLine
+import os
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+db = SQLAlchemy(app)
 api = Api(app)
 
 #Para implementar os posts
