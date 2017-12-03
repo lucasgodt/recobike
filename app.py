@@ -4,33 +4,14 @@ from flask_jsonpify import jsonify
 from flask_cors import CORS, cross_origin
 import pandas as pd
 import numpy as np
-from flask_sqlalchemy import SQLAlchemy
 from addcsv import addLine
-import os
+from models import db, Tracks, TrackPoints
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
-#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
-#db = SQLAlchemy(app)
 api = Api(app)
 
-
-#class Tracks(db.Model):
-#    id_android = db.Column(db.String(80), primary_key=False)
-#    id_track = db.Column(db.String(80), unique=True, nullable=False)
-#    rating = db.Column(db.Integer, unique=False, nullable=True)
-
-#    def __repr__(self):
-#        return '<User %r>' % self.username
-    
-#class TrackPoints(db.Model):
-#    id_track = db.Column(db.String(80), primary_key=False)
-#    latitude = db.Column(db.Integer, unique=False, nullable=False)
-#    longitude = db.Column(db.Integer, unique=False, nullable=False)
-
-#    def __repr__(self):
-#        return '<User %r>' % self.username
 
 #Para implementar os posts
 #fields_tracks = ['id','latitude','longitude','track_id','time']
@@ -95,15 +76,19 @@ def novatrack():
     json_coordenadas = input_json["coordenadas"];
     for coordenada in json_coordenadas:
         #print(coordenada)
-        #fields_tracks = ['id','latitude','longitude','track_id','time']
-        argumentos_tracks = [input_json["$trackId"],coordenada['latitude'],coordenada['longitude']]
-        addLine(argumentos_tracks,'go_track_trackpoints.csv')
+        track = TrackPoints(id_track = input_json["$trackId"] ,latitude = coordenada['latitude'], longitude = coordenada['longitude'])
+        db.session.add(track);
+        db.commit();
+        #colocar no db
+        #addLine(argumentos_tracks,'go_track_trackpoints.csv')
         
     # adiciona um novo percurso e avaliacao aos usuários
-    print(input_json["userId"])
     #fields_users = ['id','id_android','speed','time','distance','rating','rating_bus','rating_weather','car_or_bus','linha']
-    argumentos_users = [input_json["$trackId"],input_json["userId"],0,0,0,input_json["trackRating"]];
-    addLine(argumentos_users,'go_track_tracks.csv')
+    user_rides = Tracks(id_android = input_json["userId"],id_track = input_json["$trackId"],rating = input_json["trackRating"]);
+    db.session.add(user_rides);
+    db.commit();
+    #colocar no db
+    #addLine(argumentos_users,'go_track_tracks.csv')
                             
     dictToReturn = {'resposta':'Deu certo'}
     return jsonify(dictToReturn)
