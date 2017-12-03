@@ -28,8 +28,8 @@ class TrackPoints(db.Model):
     __tablename__ = 'TrackPoints';
     id_point = db.Column(db.Integer, primary_key=True, autoincrement = True)
     id_track = db.Column(db.String(80), primary_key=False)
-    latitude = db.Column(db.Float(precision='4,8'))
-    longitude = db.Column(db.Float(precision='4,8'))
+    latitude = db.Column(db.Numeric(precision=4,8))
+    longitude = db.Column(db.Numeric(precision=4,8))
 
     def __repr__(self):
         return '<Track %r>' % self.id_track
