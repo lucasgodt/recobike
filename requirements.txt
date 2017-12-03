@@ -7,5 +7,5 @@ fastdtw
 pandas
 gunicorn
 scipy
-flask-sqlalchemy psycopg2
+flask-sqlalchemy
 
