@@ -4,7 +4,6 @@ from flask_jsonpify import jsonify
 from flask_cors import CORS, cross_origin
 import pandas as pd
 import numpy as np
-from addcsv import addLine
 from models import db, Tracks, TrackPoints
 
 app = Flask(__name__)
@@ -78,7 +77,7 @@ def novatrack():
         #print(coordenada)
         track = TrackPoints(id_track = input_json["$trackId"] ,latitude = coordenada['latitude'], longitude = coordenada['longitude'])
         db.session.add(track);
-        db.commit();
+        db.session.commit();
         #colocar no db
         #addLine(argumentos_tracks,'go_track_trackpoints.csv')
         
@@ -86,7 +85,7 @@ def novatrack():
     #fields_users = ['id','id_android','speed','time','distance','rating','rating_bus','rating_weather','car_or_bus','linha']
     user_rides = Tracks(id_android = input_json["userId"],id_track = input_json["$trackId"],rating = input_json["trackRating"]);
     db.session.add(user_rides);
-    db.commit();
+    db.session.commit();
     #colocar no db
     #addLine(argumentos_users,'go_track_tracks.csv')
                             
