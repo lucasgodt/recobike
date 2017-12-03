@@ -7,6 +7,6 @@ fastdtw
 pandas
 gunicorn
 scipy
-flask-sqlalchemy
+flask-sqlalchemy==2.1
 psycopg2
 
