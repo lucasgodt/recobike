@@ -13,7 +13,7 @@ app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 api = Api(app)
-
+ 
 
 #Para implementar os posts
 #fields_tracks = ['id','latitude','longitude','track_id','time']
