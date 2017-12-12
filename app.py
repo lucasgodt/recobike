@@ -4,8 +4,13 @@ from flask_jsonpify import jsonify
 from flask_cors import CORS, cross_origin
 import pandas as pd
 import numpy as np
-from models import db, Tracks, TrackPoints
+#from models import db, Tracks, TrackPoints
 from sqlalchemy import create_engine
+
+
+###DESENVOLVER OS POSTS COM A ENGINE NOVAMENTE
+
+
 
 engine = create_engine("postgres://tncxxisbtfhrno:1fd5d25a7d85e5e9dbdc6b6b3d299d933fb6c25697b563a2caa2dc9a93757c35@ec2-54-83-49-44.compute-1.amazonaws.com:5432/da608cod3ci82f")
 
@@ -39,7 +44,9 @@ trackspoints_df = pd.read_sql_query('select * from "trackspointstable"',con=engi
 tracks = trackspoints_df[['track_id','latitude','longitude']]
 
 #carrega o csv gerado por update.py
-R_df = pd.read_sql_query('select * from "matrixtable"',con=engine)
+R_df_primario = pd.read_sql_query('select * from "matrixtable"',con=engine)
+
+R_df = R_df_primario.drop(['index', 'id_android'],axis=1)
 #R_df = pd.read_csv('matrix.csv',header=0,index_col=0) nao mais
 #Transforma o dataframe do pandas em uma matriz numpy para se realizar os cálculos e a normalização
 R = R_df.as_matrix().astype(np.int64)
@@ -89,17 +96,17 @@ def novatrack():
     json_coordenadas = input_json["coordenadas"];
     for coordenada in json_coordenadas:
         print(coordenada)
-        track = TrackPoints(id_track = input_json["$trackId"] ,latitude = coordenada['latitude'], longitude = coordenada['longitude'])
-        db.session.add(track);
-        db.session.commit();
+#        track = TrackPoints(id_track = input_json["$trackId"] ,latitude = coordenada['latitude'], longitude = coordenada['longitude'])
+#        db.session.add(track);
+#        db.session.commit();
         #colocar no db
         #addLine(argumentos_tracks,'go_track_trackpoints.csv')
         
     # adiciona um novo percurso e avaliacao aos usuários
     #fields_users = ['id','id_android','speed','time','distance','rating','rating_bus','rating_weather','car_or_bus','linha']
-    user_rides = Tracks(id_android = input_json["userId"],id_track = input_json["$trackId"],rating = input_json["trackRating"]);
-    db.session.add(user_rides);
-    db.session.commit();
+#    user_rides = Tracks(id_android = input_json["userId"],id_track = input_json["$trackId"],rating = input_json["trackRating"]);
+#    db.session.add(user_rides);
+#    db.session.commit();
     #colocar no db
     #addLine(argumentos_users,'go_track_tracks.csv')
                             
