@@ -5,6 +5,9 @@ from flask_cors import CORS, cross_origin
 import pandas as pd
 import numpy as np
 from models import db, Tracks, TrackPoints
+from sqlalchemy import create_engine
+
+engine = create_engine("postgres://tncxxisbtfhrno:1fd5d25a7d85e5e9dbdc6b6b3d299d933fb6c25697b563a2caa2dc9a93757c35@ec2-54-83-49-44.compute-1.amazonaws.com:5432/da608cod3ci82f")
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -17,16 +20,27 @@ api = Api(app)
 #fields_users = ['id','id_android','speed','time','distance','rating','rating_bus','rating_weather','car_or_bus','linha']
 
 #carrega os csvs do dataset
-csv = pd.read_csv('go_track_tracks.csv')
+#csv = pd.read_csv('go_track_tracks.csv') nao mais
 
-ratings = csv[['id_android','id','rating']]
+#ratings = csv[['id_android','id','rating']]nao mais
 
-csvt = pd.read_csv('go_track_trackspoints.csv')
+#carrega os df do database
 
-tracks = csvt[['track_id','latitude','longitude']]
+tracks_df = pd.read_sql_query('select * from "trackstable"',con=engine)
+
+ratings = tracks_df[['id_android','id','rating']]
+
+#csvt = pd.read_csv('go_track_trackspoints.csv')
+
+#tracks = csvt[['track_id','latitude','longitude']]
+
+trackspoints_df = pd.read_sql_query('select * from "trackspointstable"',con=engine)
+
+tracks = trackspoints_df[['track_id','latitude','longitude']]
 
 #carrega o csv gerado por update.py
-R_df = pd.read_csv('matrix.csv',header=0,index_col=0)
+R_df = pd.read_sql_query('select * from "matrixtable"',con=engine)
+#R_df = pd.read_csv('matrix.csv',header=0,index_col=0) nao mais
 #Transforma o dataframe do pandas em uma matriz numpy para se realizar os cálculos e a normalização
 R = R_df.as_matrix().astype(np.int64)
 
