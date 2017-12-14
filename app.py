@@ -8,8 +8,9 @@ import numpy as np
 from sqlalchemy import create_engine
 
 
-###DESENVOLVER OS POSTS COM A ENGINE NOVAMENTE
-
+### 1 - DESENVOLVER OS POSTS COM A ENGINE NOVAMENTE
+### 2 - (FEITO)ATUALIZAR update.py PARA GERAR A MATRIX E A ATUALIZAR NO BANCO DE DADOS À PARTIR DO LOCAL
+### 3 - ATUALIZAR o database do heroku PARA NAO DAR PAU NA APRESENTACAO
 
 
 engine = create_engine("postgres://tncxxisbtfhrno:1fd5d25a7d85e5e9dbdc6b6b3d299d933fb6c25697b563a2caa2dc9a93757c35@ec2-54-83-49-44.compute-1.amazonaws.com:5432/da608cod3ci82f")
@@ -46,7 +47,7 @@ tracks = trackspoints_df[['track_id','latitude','longitude']]
 #carrega o csv gerado por update.py
 R_df_primario = pd.read_sql_query('select * from "matrixtable"',con=engine)
 
-R_df = R_df_primario.drop(['index', 'id_android'],axis=1)
+R_df = R_df_primario.drop(['id_android'],axis=1)
 #R_df = pd.read_csv('matrix.csv',header=0,index_col=0) nao mais
 #Transforma o dataframe do pandas em uma matriz numpy para se realizar os cálculos e a normalização
 R = R_df.as_matrix().astype(np.int64)
@@ -96,9 +97,11 @@ def novatrack():
     json_coordenadas = input_json["coordenadas"];
     for coordenada in json_coordenadas:
         print(coordenada)
-#        track = TrackPoints(id_track = input_json["$trackId"] ,latitude = coordenada['latitude'], longitude = coordenada['longitude'])
-#        db.session.add(track);
-#        db.session.commit();
+        engine.execute('INSERT trackspointstable', track_id = input_json["$trackId"], latitude = coordenada['latitude'],longitude = coordenada['longitude'])
+        #track = trackspointstable(id_track = input_json["$trackId"] ,latitude = coordenada['latitude'], longitude = coordenada['longitude'])
+        #INSERT [INTO] table_or_view [(column_list)] data_values
+#            db.session.add(track);
+#            db.session.commit();
         #colocar no db
         #addLine(argumentos_tracks,'go_track_trackpoints.csv')
         
