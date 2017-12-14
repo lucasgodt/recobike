@@ -97,7 +97,8 @@ def novatrack():
     json_coordenadas = input_json["coordenadas"];
     for coordenada in json_coordenadas:
         print(coordenada)
-        engine.execute('INSERT trackspointstable', track_id = input_json["$trackId"], latitude = coordenada['latitude'],longitude = coordenada['longitude'])
+        #INSERT INTO users (id, name, fullname) VALUES (:id, :name, :fullname)
+        engine.execute('INSERT INTO trackspointstable (track_id,latitude,longitude) VALUES (:track_id,:latitude,:longitude)', track_id = input_json["$trackId"], latitude = coordenada['latitude'],longitude = coordenada['longitude'])
         #track = trackspointstable(id_track = input_json["$trackId"] ,latitude = coordenada['latitude'], longitude = coordenada['longitude'])
         #INSERT [INTO] table_or_view [(column_list)] data_values
 #            db.session.add(track);
