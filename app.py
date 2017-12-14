@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 #from models import db, Tracks, TrackPoints
 from sqlalchemy import create_engine
-
+from sqlalchemy.sql import table, column
 
 ### 1 - DESENVOLVER OS POSTS COM A ENGINE NOVAMENTE
 ### 2 - (FEITO)ATUALIZAR update.py PARA GERAR A MATRIX E A ATUALIZAR NO BANCO DE DADOS À PARTIR DO LOCAL
@@ -14,7 +14,9 @@ from sqlalchemy import create_engine
 
 
 engine = create_engine("postgres://tncxxisbtfhrno:1fd5d25a7d85e5e9dbdc6b6b3d299d933fb6c25697b563a2caa2dc9a93757c35@ec2-54-83-49-44.compute-1.amazonaws.com:5432/da608cod3ci82f")
-
+conn = engine.connect()
+pointstable = table('trackspointstable', column('track_id'), column('latitude'), column('longitude'))
+trackstable = table('trackstable', column('id_android'), column('id'), column('rating'))
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -97,8 +99,9 @@ def novatrack():
     json_coordenadas = input_json["coordenadas"];
     for coordenada in json_coordenadas:
         print(coordenada)
+        ins = pointstable.insert().values(track_id = input_json["$trackId"], latitude = coordenada['latitude'],longitude = coordenada['longitude'])
         #INSERT INTO users (id, name, fullname) VALUES (:id, :name, :fullname)
-        engine.execute('INSERT INTO trackspointstable (track_id,latitude,longitude) VALUES (:track_id,:latitude,:longitude)', track_id = input_json["$trackId"], latitude = coordenada['latitude'],longitude = coordenada['longitude'])
+        conn.execute(ins)
         #track = trackspointstable(id_track = input_json["$trackId"] ,latitude = coordenada['latitude'], longitude = coordenada['longitude'])
         #INSERT [INTO] table_or_view [(column_list)] data_values
 #            db.session.add(track);
@@ -107,6 +110,7 @@ def novatrack():
         #addLine(argumentos_tracks,'go_track_trackpoints.csv')
         
     # adiciona um novo percurso e avaliacao aos usuários
+    ins = trackstable.insert().values(id_android = input_json["userId"], id = input_json["$trackId"], rating = input_json["trackRating"])
     #fields_users = ['id','id_android','speed','time','distance','rating','rating_bus','rating_weather','car_or_bus','linha']
 #    user_rides = Tracks(id_android = input_json["userId"],id_track = input_json["$trackId"],rating = input_json["trackRating"]);
 #    db.session.add(user_rides);
