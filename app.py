@@ -67,13 +67,12 @@ all_user_predicted_ratings = np.dot(np.dot(U, sigma), Vt) + user_ratings_mean.re
 preds_df = pd.DataFrame(all_user_predicted_ratings, columns = R_df.columns.astype(np.int64), index = R_df.index)
 
 def recommend_tracks(predictions_df, userID, tracks, original_ratings_df, num_recommendations=5):
-    
+
     # Pego as previsões e as ordena
-    sorted_user_predictions = predictions_df.loc[userID].sort_values(ascending=False)
-    
+    user_predictions = predictions_df.loc[userID].squeeze()
+    sorted_user_predictions = user_predictions.sort_values(ascending=False)
     # Pega os dados do usuário
     user_data = original_ratings_df[original_ratings_df.id_android == (userID)]
-
     # Recomenda as trajetorias com as avaliações mais altas e que ainda não foram previstas
     User = pd.DataFrame(sorted_user_predictions).reset_index()
     UserResult = User.rename(columns={'index': 'id'})
