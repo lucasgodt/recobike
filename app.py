@@ -110,7 +110,7 @@ def novatrack():
         #addLine(argumentos_tracks,'go_track_trackpoints.csv')
         
     # adiciona um novo percurso e avaliacao aos usuários
-    ins2 = trackstable.insert().values(id_android = input_json["userId"], id = input_json["$trackId"], rating = input_json["trackRating"])
+    ins2 = trackstable.insert().values(id_android = input_json["androidId"], id = input_json["$trackId"], rating = input_json["trackRating"])
     conn.execute(ins2)
     #fields_users = ['id','id_android','speed','time','distance','rating','rating_bus','rating_weather','car_or_bus','linha']
 #    user_rides = Tracks(id_android = input_json["userId"],id_track = input_json["$trackId"],rating = input_json["trackRating"]);
