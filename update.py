@@ -58,7 +58,7 @@ def updateUserRatings(user, R):
     for idx,rating in enumerate(rated):
         dicSim = ordenaSimilaridade(tracks[tracks['track_id']==rated.index[idx]])
         for track in dicSim.items():
-            if  ((track[1]>0.3) and (R_df.loc[user].loc[track[0]]<5)):
+            if  ((track[1]>0.3) and (R_df.loc[user].loc[track[0]]<10)):
             #Desenvolver método para similaridade das características das rotas
             #A avaliação prevista é a média das avaliações dos trajetos similares
             #if similaridade do trajeto menor que 0.5, então
