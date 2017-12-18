@@ -68,8 +68,8 @@ def updateUserRatings(user, R):
                         
 #Prevê ratings para todos os usuários
 def updateMatrix():
-    for user in range(0,28): 
-        updateUserRatings(user, R_df)
+    for index, row in R_df.iterrows(): 
+        updateUserRatings(index, R_df)
         
 updateMatrix()
 
